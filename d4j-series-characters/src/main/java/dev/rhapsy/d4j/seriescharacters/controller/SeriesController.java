@@ -1,4 +1,4 @@
-package dev.rhapsy.d4j.gamecharacters.controller;
+package dev.rhapsy.d4j.seriescharacters.controller;
 
 import com.github.javafaker.Faker;
 import org.slf4j.Logger;
@@ -15,23 +15,23 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/v1/lol")
-public class CharacterController {
+@RequestMapping("api/v1/got")
+public class SeriesController {
 
     private final Faker faker = new Faker();
     private final List<String> randomCharacters = new ArrayList<>();
-    private static final Logger log = LoggerFactory.getLogger(CharacterController.class);
+    private static final Logger log = LoggerFactory.getLogger(SeriesController.class);
 
     private final ServerProperties serverProperties;
 
-    public CharacterController(ServerProperties serverProperties) {
+    public SeriesController(ServerProperties serverProperties) {
         this.serverProperties = serverProperties;
     }
 
     @PostConstruct
     public void init() {
         for (int i = 0; i < 10; i++) {
-            randomCharacters.add(faker.leagueOfLegends().champion());
+            randomCharacters.add(faker.gameOfThrones().character());
         }
     }
 
@@ -44,7 +44,7 @@ public class CharacterController {
 
     @GetMapping("/characters")
     public ResponseEntity<?> getRandomCharacters() {
-        log.info("Getting League of Legends Random Characters...");
-        return ResponseEntity.ok(Map.of("LeagueOfLegends", randomCharacters));
+        log.info("Getting Game of Thrones Random Characters...");
+        return ResponseEntity.ok(Map.of("GameOfThrones", randomCharacters));
     }
 }

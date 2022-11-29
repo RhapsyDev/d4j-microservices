@@ -1,4 +1,4 @@
-package dev.rhapsy.d4j.gamecharacters.controller;
+package dev.rhapsy.d4jgamecharactersfailover.controller;
 
 import com.github.javafaker.Faker;
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/v1/lol")
+@RequestMapping("api/v1/lol-failover")
 public class CharacterController {
 
     private final Faker faker = new Faker();
@@ -31,7 +31,7 @@ public class CharacterController {
     @PostConstruct
     public void init() {
         for (int i = 0; i < 10; i++) {
-            randomCharacters.add(faker.leagueOfLegends().champion());
+            randomCharacters.add("Fail-over -> " + faker.leagueOfLegends().champion());
         }
     }
 
@@ -39,12 +39,12 @@ public class CharacterController {
     public ResponseEntity<String> index() {
         log.info("index() called...");
         return ResponseEntity.ok(
-                String.format("Running Instance on port: %s", serverProperties.getPort()));
+                String.format("Fail-over -> Running Instance on port: %s", serverProperties.getPort()));
     }
 
     @GetMapping("/characters")
     public ResponseEntity<?> getRandomCharacters() {
-        log.info("Getting League of Legends Random Characters...");
+        log.info("Fail-over -> Getting League of Legends Random Characters...");
         return ResponseEntity.ok(Map.of("LeagueOfLegends", randomCharacters));
     }
 }
