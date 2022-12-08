@@ -1,6 +1,7 @@
 package dev.rhapsy.d4j.gamecharacters.controller;
 
 import com.github.javafaker.Faker;
+import dev.rhapsy.d4j.gamecharacters.service.FooService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -23,9 +24,11 @@ public class CharacterController {
     private static final Logger log = LoggerFactory.getLogger(CharacterController.class);
 
     private final ServerProperties serverProperties;
+    private final FooService fooService;
 
-    public CharacterController(ServerProperties serverProperties) {
+    public CharacterController(ServerProperties serverProperties, FooService fooService) {
         this.serverProperties = serverProperties;
+        this.fooService = fooService;
     }
 
     @PostConstruct
@@ -45,6 +48,7 @@ public class CharacterController {
     @GetMapping("/characters")
     public ResponseEntity<?> getRandomCharacters() {
         log.info("Getting League of Legends Random Characters...");
+        fooService.printLog(); // for testing sleuth-zipkin
         return ResponseEntity.ok(Map.of("LeagueOfLegends", randomCharacters));
     }
 }
