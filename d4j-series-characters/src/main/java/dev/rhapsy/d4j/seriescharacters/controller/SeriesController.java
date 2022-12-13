@@ -1,6 +1,12 @@
 package dev.rhapsy.d4j.seriescharacters.controller;
 
 import com.github.javafaker.Faker;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -43,6 +49,12 @@ public class SeriesController {
     }
 
     @GetMapping("/characters")
+    @Operation(summary = "Get a list of characters from GoT")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the characters",
+                    content = {@Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = String.class)))}),
+            @ApiResponse(responseCode = "404", description = "Characters not found",
+                    content = @Content)})
     public ResponseEntity<?> getRandomCharacters() {
         log.info("Getting Game of Thrones Random Characters...");
         return ResponseEntity.ok(Map.of("GameOfThrones", randomCharacters));
