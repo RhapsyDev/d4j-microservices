@@ -1,0 +1,9 @@
+spring:
+  zipkin:
+    baseUrl: http://localhost:9411
+  application:
+    name: d4j-auth
+server:
+  port: 8084
+jwt:
+  secret: d4j-secret
