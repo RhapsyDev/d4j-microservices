@@ -4,6 +4,6 @@ spring:
   application:
     name: d4j-auth
 server:
-  port: 8084
+  port: 8085
 jwt:
   secret: d4j-secret
